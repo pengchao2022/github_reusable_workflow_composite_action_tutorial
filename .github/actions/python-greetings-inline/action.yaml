@@ -27,7 +27,7 @@ runs:
         name = os.getenv("NAME")
         print(f"Hello, {name}")
         EOF 
-        )
+        
 
         echo "my_new_greeting=$greeting" >> "$GITHUB_OUTPUT"
 
@@ -36,5 +36,5 @@ runs:
       run: |
         echo "my_new_greeting is: ${{ steps.py.outputs.my_new_greeting }}"
 
-        
+
     

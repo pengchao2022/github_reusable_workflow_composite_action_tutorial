@@ -38,7 +38,15 @@ jobs:
         run: |
           echo "Here we will show the current working directory"
           echo "$(pwd)"
+    
+      - name: Show the size of the folder
+        id: folder-size
+        shell: bash
+        run: |
+          echo "Here we will show the folder size"
+          du -sh *
 
           
+
 
 

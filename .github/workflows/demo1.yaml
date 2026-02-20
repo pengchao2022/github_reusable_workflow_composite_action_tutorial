@@ -56,15 +56,24 @@ jobs:
           echo "We are creating multiple folders in this working directory"
           mkdir -p devops_tools/jave_tool/sector1
           mkdir sre_tools
+        
+      - name: Show the folders and files list
+        id: files-folders-list
+        shell: bash
+        run: |
+          echo "Here is the list for files and folders"
+          ls -la
     
       - name: Show the size of the folder
         id: folder-size
         shell: bash
         run: |
           echo "Here we will show the folder size"
-          du -sh .
+          echo "total size is: $(du -sh .)
 
           
+
+
 
 
 

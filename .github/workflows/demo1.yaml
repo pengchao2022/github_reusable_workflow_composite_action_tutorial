@@ -90,10 +90,11 @@ jobs:
         shell: bash
         run: |
           echo "Here we will swiitch to user user"
-          sudo su -
-          whoami
+          sudo whomai
 
           
+
+
 
     
 

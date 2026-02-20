@@ -143,7 +143,15 @@ jobs:
             cowsay --version
           fi
 
+      - name: Cowsay to say Hello Shanghai
+        id: cowsay-shanghai
+        shell: bash
+        run: |
+          echo "we are using cowsay to say hello shanghai"
+          cowsay "Hello, Shanghai"
           
+
+
 
 
 

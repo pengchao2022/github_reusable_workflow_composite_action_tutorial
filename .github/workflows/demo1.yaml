@@ -126,7 +126,26 @@ jobs:
             tree --version
           fi
 
+      - name: Check cowsay is installed or not
+        id: check-cowsay
+        shell: bash
+        run: |
+          echo "we are checking cowsay is installed or not ..."
+          if command -v cowsay &> /dev/null; then
+            echo $?
+            echo "cowsay is already installed on runner"
+            cowsay --version
+          else
+            echo "cowsay is not found... we are installing cowsay now"
+            sudo apt update
+            sudo apt install cowsay -y
+            echo "cowsay is installed successfully"
+            cowsay --version
+          fi
+
           
+
+
 
 
 

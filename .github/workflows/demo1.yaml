@@ -110,6 +110,24 @@ jobs:
             docker --version
           fi
 
+      - name: Check tree is installed or not
+        id: check-tree
+        shell: bash
+        run: |
+          if command -v tree &> /dev/null; then
+            echo $?
+            echo "tree is already installed on runner"
+            tree --version
+          else
+            echo "tree is not found, Installing tree ... "
+            sudo apt update
+            sudo apt install tree -y
+            echo "tree is installed successfully"
+            tree --version
+
+            
+
+
 
 
 

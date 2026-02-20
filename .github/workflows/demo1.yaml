@@ -69,9 +69,9 @@ jobs:
         shell: bash
         run: |
           echo "Here we will show the folder size"
-          echo "total size is: $(du -sh .)
+          echo "total size is: $(du -sh .)"
 
-          
+
 
 
 

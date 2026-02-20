@@ -1,0 +1,32 @@
+name: Test python array inline with github actions
+run-name: python array inline
+
+on:
+  push:
+    branches:
+      - feature/GTP-00100-github-action-python-operations-1
+
+jobs:
+  run-python-array-inline:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check python3 is installed or not
+        id: check-python3
+        shell: bash
+        run: |
+          echo "we are checking python3 is installed or not"
+          if command -v python3 &> /dev/null; then
+            echo $?
+            echo "python3 is already installed on this runner..."
+            python3 --version
+          else
+            echo "python3 is not installed on this runner and we are installing python3 now..."
+            sudo apt update
+            sudo apt install python3 -y
+            echo "python3 is installed successfully"
+            python3 --version
+          fi
+
+      - name: Run python array inline code
+        id: python-array-inline-step
+        uses: pengchao2022/github_reusable_workflow_composite_action_tutorial/.github/actions/python-array-inline@feature/GTP-00100-github-action-python-operations-1

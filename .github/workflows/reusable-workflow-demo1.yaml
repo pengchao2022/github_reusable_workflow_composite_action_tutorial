@@ -1,0 +1,83 @@
+name: Resuable text processor workflow
+on:
+  workflow_call:
+    inputs:
+      text:
+        description: 'Input text to process'
+        required: true
+        type: string
+        default: 'Hello World'
+      operation:
+        description: 'Operation to perform (uppercase, lowercase, reverse, count, capitalize)'
+        required: false
+        type: string
+        default: 'uppercase'
+      prefix:
+        description: 'prefix to add to the result'
+        required: false
+        type: string
+        default: ''
+    outputs:
+      processed_text:
+        description: 'Processed text result'
+        value: ${{ jobs.process-text.outputs.processed_text }}
+      word_count:
+        description: 'Number of words in the text'
+        value: ${{ jobs.process-text.outputs.word_count }}
+      char_count:
+        description: 'Number of characters in the text'
+        value: ${{ jobs.process-text.outputs.char_count }}
+      execution_info:
+        description: 'Execution information (timestamp and duration)'
+        value: ${{ jobs.process-text.outputs.execution_info }}
+
+jobs:
+  process-text:
+    runs-on: ubuntu-latest
+    outputs:
+      processed_text: ${{ steps.text-processor.outputs.processed_text }}
+      word_count: ${{ steps.text-processor.outputs.word_count }}
+      char_count: ${{ steps.text-processor.outputs.char_count }}
+      execution_info: ${{ steps.info.outputs.execution_info }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Record start time
+        id: start
+        run: |
+          echo "This is for the beginning time"
+          echo "start_time=$(date +'%Y-%m-%d %H:%M:%S')" >> "$GITHUB_OUTPUT"
+
+      - name: Run python text processor action (composite action)
+        id: text-processor
+        uses: pengchao2022/github_reusable_workflow_composite_action_tutorial/.github/actions/python-text-processor@feature/GTP-00100-github-action-python-operations-3
+        with:
+          text: ${{ inputs.text }}
+          operation: ${{ inputs.operation }}
+          prefix: ${{ inputs.prefix }}
+
+      - name: Generate execution info
+        id: info
+        run: |
+          end_time=$(date +'%Y-%m-%d %H:%M:%S')
+          execution_info="Started: ${{ steps.start.outputs.start_time }}, Ended: ${end_time}"
+          echo "execution_info=${execution_info}" >> "$GITHUB_OUTPUT"
+
+      - name: Display results
+        run: |
+          echo "============================================================"
+          echo "Python text processor results"
+          echo "============================================================"
+          echo "Input: '${{ inputs.text }}'"
+          echo "Operation: ${{ inputs.operation }}"
+          echo "Prefix: '${{ inputs.prefix }}'"
+          echo "------------------------------------------------------------"
+          echo "Processed: ${{ steps.text-processor.outputs.processed_text }}"
+          echo "Word count: ${{ steps.text-processor.outputs.word_count }}"
+          echo "Character: ${{ steps.text-processor.outputs.char_count }}"
+          echo "Execution: ${{ steps.info.outputs.execution_info }}"
+          echo "============================================================="
+          
+

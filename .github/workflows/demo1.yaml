@@ -70,6 +70,13 @@ jobs:
         run: |
           echo "Here we will show the folder size"
           echo "total size is: $(du -sh .)"
+
+      - name: Show all users in runner
+        id: show-users
+        shell: bash
+        run: |
+          echo "Here will show all users in runner"
+          cat /etc/passwd | cut -d: -f1
     
       - name: Show who am i 
         id: who-you-are
@@ -78,7 +85,9 @@ jobs:
           echo "Here will show who you are"
           whoami
 
-          
+    
+
+
 
 
 

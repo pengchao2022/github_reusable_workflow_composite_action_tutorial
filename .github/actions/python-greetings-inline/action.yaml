@@ -1,0 +1,40 @@
+name: Python greetings to the name your set
+description: This github action will give you greetings using python
+author: allen ma
+
+inputs:
+  name:
+    description: 'name to greet' 
+    required: false
+    default: 'Pengchao Ma'
+
+outputs:
+  greetings:
+    description: 'Greeting text'
+    value: ${{ steps.py.outputs.my_new_greeting }}
+
+runs:
+  using: composite
+  steps:
+    - name: Run python inline
+      id: py 
+      shell: bash
+      env:
+        NAME: ${{ inputs.name }}
+      run: |
+        greeting=$(python3 - <<-'EOF'
+        import os 
+        name = os.getenv("NAME")
+        print(f"Hello, {name}")
+        EOF 
+        )
+
+        echo "my_new_greeting=$greeting" >> "$GITHUB_OUTPUT"
+
+    - name: Show my greetings
+      shell: bash
+      run: |
+        echo "my_new_greeting is: ${{ steps.py.outputs.my_new_greeting }}"
+
+        
+    

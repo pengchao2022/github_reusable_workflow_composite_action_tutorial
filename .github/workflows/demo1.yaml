@@ -38,15 +38,35 @@ jobs:
         run: |
           echo "Here we will show the current working directory"
           echo "$(pwd)"
+      
+      - name: Create files in working directory
+        id: create-files
+        shell: bash
+        run: |
+          echo "We are creating files in this working directory"
+          echo "hello world, hello China!" > test1.txt
+          echo "this is the day I have been working" > test2.txt
+          echo "I love zhengjiao very much!" > test3.txt
+          cat test1.txt
+
+      - name: Create folders in working directory
+        id: create-folders
+        shell: bash
+        run: |
+          echo "We are creating multiple folders in this working directory"
+          mkdir -p devops_tools/jave_tool/sector1
+          mkdir sre_tools
     
       - name: Show the size of the folder
         id: folder-size
         shell: bash
         run: |
           echo "Here we will show the folder size"
-          du -sh *
+          du -sh .
 
           
+
+
 
 
 

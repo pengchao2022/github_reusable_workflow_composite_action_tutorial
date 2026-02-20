@@ -24,6 +24,12 @@ jobs:
         run: |
           echo "Here we will show the memory info"
           free -h
-
           
+      - name: Show disk info
+        id: disk-info
+        shell: bash
+        run: |
+          echo "Here we will show the disk info"
+          df -TH
+
 

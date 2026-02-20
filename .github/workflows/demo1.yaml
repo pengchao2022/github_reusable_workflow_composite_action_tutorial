@@ -85,6 +85,16 @@ jobs:
           echo "Here will show who you are"
           whoami
 
+      - name: Switch to root user
+        id: switch-root
+        shell: bash
+        run: |
+          echo "Here we will swiitch to user user"
+          sudo su -
+          whoami
+
+          
+
     
 
 

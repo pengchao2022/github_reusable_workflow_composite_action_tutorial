@@ -70,6 +70,15 @@ jobs:
         run: |
           echo "Here we will show the folder size"
           echo "total size is: $(du -sh .)"
+    
+      - name: Show who am i 
+        id: who-you-are
+        shell: bash
+        run: |
+          echo "Here will show who you are"
+          whoami
+
+          
 
 
 

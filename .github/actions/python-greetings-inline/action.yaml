@@ -18,19 +18,17 @@ runs:
   steps:
     - name: Run python inline
       id: py 
-      shell: bash
+      shell: python
       env:
         NAME: ${{ inputs.name }}
       run: |
-        greeting=$(python3 - <<-'EOF'
         import os 
+        import sys 
         name = os.getenv("NAME")
-        print(f"Hello, {name}")
-        EOF 
-        )
-        
-
-        echo "my_new_greeting=$greeting" >> "$GITHUB_OUTPUT"
+        greeting = f"Hello, {name}"
+        print(f"Generated greeting: {greeting}")
+        with open(os.environ['GITHUB_OUTPUT'], 'a') as f:
+          f.write(f"my_new_greeting={greeting}\n")
 
     - name: Show my greetings
       shell: bash

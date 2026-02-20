@@ -101,7 +101,7 @@ jobs:
             echo $?
             echo "Docker is already installed on runner"
             docker --version
-          else:
+          else
             echo "Docker is not found, Installing docker..."
             curl -fsSL https://get.docker.com -o get-docker.sh
             sudo sh get-docker.sh
@@ -110,7 +110,7 @@ jobs:
             docker --version
           fi
 
-          
+
 
 
 

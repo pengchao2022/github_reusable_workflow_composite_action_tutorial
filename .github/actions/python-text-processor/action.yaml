@@ -49,6 +49,9 @@ runs:
         print(f"Operation: {operation}")
         print(f"Prefix: '{prefix}'")
 
+        word_count = len(text.split())
+        char_count = len(text)
+
         if operation == 'uppercase':
           result = text.upper()
         elif operation == 'lowercase':
@@ -56,10 +59,8 @@ runs:
         elif operation == 'reverse':
           result = text[::-1]
         elif operation == 'capitalize':
-          result = text.tittle()
+          result = text.title()
         elif operation == 'count':
-          word_count = len(text.split())
-          char_count = len(text)
           result = f"Words: {word_count}, Characters: {char_count}"
         else:
           result = f"Unknown Operation: {operation}"

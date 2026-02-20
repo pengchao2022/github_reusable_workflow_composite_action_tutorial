@@ -25,5 +25,155 @@ jobs:
           echo "Here we will show the memory info"
           free -h
 
+      - name: Show disk info
+        id: disk-info
+        shell: bash
+        run: |
+          echo "Here we will show the disk info"
+          df -TH
+
+      - name: Show current working directory
+        id: working-directory
+        shell: bash
+        run: |
+          echo "Here we will show the current working directory"
+          echo "$(pwd)"
+      
+      - name: Create files in working directory
+        id: create-files
+        shell: bash
+        run: |
+          echo "We are creating files in this working directory"
+          echo "hello world, hello China!" > test1.txt
+          echo "this is the day I have been working" > test2.txt
+          echo "I love zhengjiao very much!" > test3.txt
+          cat test1.txt
+
+      - name: Create folders in working directory
+        id: create-folders
+        shell: bash
+        run: |
+          echo "We are creating multiple folders in this working directory"
+          mkdir -p devops_tools/jave_tool/sector1
+          mkdir sre_tools
+        
+      - name: Show the folders and files list
+        id: files-folders-list
+        shell: bash
+        run: |
+          echo "Here is the list for files and folders"
+          ls -la
+    
+      - name: Show the size of the folder
+        id: folder-size
+        shell: bash
+        run: |
+          echo "Here we will show the folder size"
+          echo "total size is: $(du -sh .)"
+
+      - name: Show all users in runner
+        id: show-users
+        shell: bash
+        run: |
+          echo "Here will show all users in runner"
+          cat /etc/passwd | cut -d: -f1
+    
+      - name: Show who am i 
+        id: who-you-are
+        shell: bash
+        run: |
+          echo "Here will show who you are"
+          whoami
+
+      - name: Switch to root user
+        id: switch-root
+        shell: bash
+        run: |
+          echo "Here we will swiitch to user user"
+          sudo whoami
+
+      - name: Check docker is installed or not if not installed then install
+        id: check-docker
+        shell: bash
+        run: |
+          echo "we are checking docker ... "
+          if command -v docker &> /dev/null; then
+            echo $?
+            echo "Docker is already installed on runner"
+            docker --version
+          else
+            echo "Docker is not found, Installing docker..."
+            curl -fsSL https://get.docker.com -o get-docker.sh
+            sudo sh get-docker.sh
+            sudo usermod -aG docker $USER
+            echo "Docker is installed successfully"
+            docker --version
+          fi
+
+      - name: Check tree is installed or not
+        id: check-tree
+        shell: bash
+        run: |
+          if command -v tree &> /dev/null; then
+            echo $?
+            echo "tree is already installed on runner"
+            tree --version
+          else
+            echo "tree is not found, Installing tree ... "
+            sudo apt update
+            sudo apt install tree -y
+            echo "tree is installed successfully"
+            tree --version
+          fi
+
+      - name: Check cowsay is installed or not
+        id: check-cowsay
+        shell: bash
+        run: |
+          echo "we are checking cowsay is installed or not ..."
+          if command -v cowsay &> /dev/null; then
+            echo $?
+            echo "cowsay is already installed on runner"
+            cowsay --version
+          else
+            echo "cowsay is not found... we are installing cowsay now"
+            sudo apt update
+            sudo apt install cowsay -y
+            echo "cowsay is installed successfully"
+            cowsay --version
+          fi
+
+      - name: Cowsay to say Hello Shanghai
+        id: cowsay-shanghai
+        shell: bash
+        run: |
+          echo "we are using cowsay to say hello shanghai"
+          cowsay "Hello, Shanghai"
           
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
 

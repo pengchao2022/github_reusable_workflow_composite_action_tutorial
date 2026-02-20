@@ -1,0 +1,29 @@
+name: This is a demo for github actions python operations
+run-name: github action demo
+
+on:
+  push:
+    branches:
+      - feature/GTP-00100-github-action-python-operations
+  
+  workflow_dispatch:
+    inputs:
+      project-name:
+        description: 'the name for this project'
+        required: false
+        default: 'devops project'
+
+jobs:
+  # job name
+  check-system-info:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Show memory info
+        id: memory-info
+        shell: bash
+        run: |
+          echo "Here we will show the memory info"
+          free -h
+
+          
+

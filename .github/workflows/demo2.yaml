@@ -10,7 +10,7 @@ jobs:
   run-python-array-inline:
     runs-on: ubuntu-latest
     steps:
-      - name: Check python3 is installed or not
+      - name: Check python3 is installed or not if not then install
         id: check-python3
         shell: bash
         run: |

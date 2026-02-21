@@ -1,0 +1,79 @@
+name: 'Python Text Processor'
+description: 'A composite action that processes text using python '
+author: 'Pengchao Ma'
+
+inputs:
+  text:
+    description: 'Input text to Processor'
+    required: true
+    default: 'Hello World'
+  operation:
+    description: 'Operation to perform (uppercase, lowercase, reverse, count)'
+    required: false
+    default: 'uppercase'
+  prefix:
+    description: 'prefix to add to the result'
+    required: false
+    default: '' 
+
+outputs:
+  processed_text:
+    description: 'Processed text result'
+    value: ${{ steps.process.outputs.result }}
+  word_count:
+    description: 'Number of words in the text'
+    value: ${{ steps.process.outputs.word_count }}
+  char_count:
+    description: 'Number of characters in the text'
+    value: ${{ steps.process.outputs.char_count }}
+
+runs:
+  using: composite
+  steps:
+    - name: Process text with python
+      id: process 
+      shell: python
+      env:
+        INPUT_TEXT: ${{ inputs.text }}
+        INPUT_OPERATION: ${{ inputs.operation }}
+        INPUT_PREFIX: ${{ inputs.prefix }}
+      run: |
+        import os 
+        import json
+
+        text = os.getenv('INPUT_TEXT', '')
+        operation = os.getenv('INPUT_OPERATION', 'uppercase')
+        prefix = os.getenv('INPUT_PREFIX', '')
+
+        print(f"Input text: '{text}'")
+        print(f"Operation: {operation}")
+        print(f"Prefix: '{prefix}'")
+
+        word_count = len(text.split())
+        char_count = len(text)
+
+        if operation == 'uppercase':
+          result = text.upper()
+        elif operation == 'lowercase':
+          result = text.lower()
+        elif operation == 'reverse':
+          result = text[::-1]
+        elif operation == 'capitalize':
+          result = text.title()
+        elif operation == 'count':
+          result = f"Words: {word_count}, Characters: {char_count}"
+        else:
+          result = f"Unknown Operation: {operation}"
+
+        if prefix:
+          result = f"{prefix}{result}"
+        
+        print(f"Result: '{result}'")
+        print(f"Word count: {word_count}")
+        print(f"Char count: {char_count}")
+
+        with open(os.environ['GITHUB_OUTPUT'], 'a') as f: 
+          f.write(f"result={result}\n")
+          f.write(f"word_count={word_count}\n")
+          f.write(f"char_count={char_count}\n")
+

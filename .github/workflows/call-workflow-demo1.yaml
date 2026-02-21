@@ -1,0 +1,58 @@
+name: Call Python Text Processor Workflow
+
+on:
+  push:
+    branches:
+      - feature/GTP-00100-github-action-python-operations-3
+  workflow_dispatch:
+    inputs:
+      text:
+        description: 'Text to process'
+        required: true
+        default: 'Hello Github Actions'
+      operation:
+        description: 'Operation type'
+        required: true
+        default: 'uppercase'
+        type: choice
+        options:
+          - uppercase
+          - lowercase
+          - reverse
+          - capitalize
+          - count
+
+      prefix:
+        description: 'Prefix to add'
+        required: false
+        default: ''
+
+jobs:
+  process-text:
+    uses: pengchao2022/github_reusable_workflow_composite_action_tutorial/.github/workflows/reusable-workflow-demo1.yaml@feature/GTP-00100-github-action-python-operations-3
+    with:
+      text: ${{ github.event.inputs.text || 'Hello Github Actions' }}
+      operation: ${{ github.event.inputs.operation || 'uppercase' }}
+      prefix: ${{ github.event.inputs.prefix || '' }}
+
+  # useing the reusable workflow outputs
+  use-results:
+    needs: process-text
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get result from reusable workflow
+        run: |
+          echo "================== RESULTS FROM REUSABLE WORKDLOW ==============="
+          echo "Processed text: ${{ needs.process-text.outputs.processed_text }}"
+          echo "Word count: ${{ needs.process-text.outputs.word_count }}"
+          echo "Character count: ${{ needs.process-text.outputs.char_count }}"
+          echo "Execution info: ${{ needs.process-text.outputs.execution_info }}"
+
+      - name: Use processed text in another step
+        run: |
+          # save the results
+          echo "${{ needs.process-text.outputs.processed_text }}" > result.txt
+          echo "Result saved to result.txt"
+          cat result.txt
+
+

@@ -1,0 +1,15 @@
+name: Test python ENV with github action
+run-name: python env action
+
+on:
+  push:
+    branches:
+      - feature/GTP-00100-github-action-python-operations-2
+
+jobs:
+  test-the-python-env:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run python and test env
+        id: python-test-env
+        uses: pengchao2022/github_reusable_workflow_composite_action_tutorial/.github/actions/python-greetings-inline@feature/GTP-00100-github-action-python-operations-2

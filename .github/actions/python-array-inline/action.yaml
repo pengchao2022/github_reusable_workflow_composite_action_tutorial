@@ -1,0 +1,25 @@
+name: Test the python array in github action
+description: Here use github composite action to test python array
+
+runs:
+  using: composite
+  steps:
+    - name: Python to combine two arrays and remove duplication
+      id: python-array
+      shell: python
+      run: |
+        arr1 = [1, 2, 3, 4, 5, 6]
+        arr2 = [5, 6, 7, 8, 9, 10]
+
+        seen = set()
+        result = []
+
+        combined_arr = arr1 + arr2
+        for x in combined_arr:
+          if x not in seen:
+            seen.add(x)
+            result.append(x)
+
+        print(result)
+        
+
